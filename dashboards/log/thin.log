@@ -1,0 +1,13 @@
+Writing PID to tmp/pids/thin.pid
+bundler: failed to load command: thin (/usr/local/bin/thin)
+Errno::ENOENT: No such file or directory @ rb_sysopen - config.ru
+  /var/lib/gems/2.3.0/gems/thin-1.6.4/lib/rack/adapter/loader.rb:32:in `read'
+  /var/lib/gems/2.3.0/gems/thin-1.6.4/lib/rack/adapter/loader.rb:32:in `load'
+  /var/lib/gems/2.3.0/gems/thin-1.6.4/lib/thin/controllers/controller.rb:182:in `load_rackup_config'
+  /var/lib/gems/2.3.0/gems/thin-1.6.4/lib/thin/controllers/controller.rb:72:in `start'
+  /var/lib/gems/2.3.0/gems/thin-1.6.4/lib/thin/runner.rb:200:in `run_command'
+  /var/lib/gems/2.3.0/gems/thin-1.6.4/lib/thin/runner.rb:156:in `run!'
+  /var/lib/gems/2.3.0/gems/thin-1.6.4/bin/thin:6:in `<top (required)>'
+  /usr/local/bin/thin:23:in `load'
+  /usr/local/bin/thin:23:in `<top (required)>'
+Exiting!
