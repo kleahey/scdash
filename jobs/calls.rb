@@ -3,7 +3,7 @@ require 'mysql2'
 SCHEDULER.every '15m', :first_in => 0 do |job|
 
   # Myql connection
-  db = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "Planet@ry7", :port => 3306, :database => "SATA" )
+  db = Mysql2::Client.new(:host => "cauniversity.net", :username => "root", :password => "Planet@ry7", :port => 3306, :database => "SATA" )
 
   # Mysql query
   sql = "SELECT
