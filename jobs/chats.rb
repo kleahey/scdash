@@ -1,6 +1,6 @@
 require 'mysql2'
 
-SCHEDULER.every '27m' do
+SCHEDULER.every '27m', :first_in => 0 do |job|
 
   # Myql connection
   db = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "Planet@ry7", :port => 3306, :database => "SATA" )
