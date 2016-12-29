@@ -54,16 +54,16 @@ dataRecChat = XmlSimple.xml_in(recChat.body, { 'KeepRoot' => false })
 solvedRecChat = dataRecChat['total']
 solvedRecChat = solvedRecChat.to_i - 2
 
-totalChats = solvedAppChat + solvedRecChat
+totalSolvedChats = solvedAppChat + solvedRecChat
 
-totalInteractions = solvedAppTickets + solvedRecTickets + totalChats
+totalInteractions = solvedAppTickets + solvedRecTickets + totalSolvedChats
 
 #Send job information to widgets
 send_event('activeAppTickets', { value: activeAppTickets } )
 send_event('activeRecTickets', { value: activeRecTickets } )
 send_event('solvedAppTickets', { current: solvedAppTickets } )
 send_event('solvedRecTickets', { current: solvedRecTickets } )
-send_event('totalChats', { current: totalChats } )
+send_event('totalSolvedChats', { current: totalSolvedChats } )
 send_event('totalInteractions', { current: totalInteractions } )
 
 end
