@@ -43,7 +43,7 @@ sleep(1)
 appChat = HTTParty.get('https://d19.parature.com/api/v1/33011/33013/Chat?_token_=Sn5wkZHGHZhwkHUvJ3OIvqhS0eyiZrHcOWNIrYrTh0In16VGnboqlREsm@mUFkbW7GxQQx7kcwGiSzHRlrnW6jlM1ZnN@8SdxKsZYHJt2fQ=&Date_Created_min_=_today_&_total_=false&Date_Ended_min_=_today_')
 dataAppChat = XmlSimple.xml_in(appChat.body, { 'KeepRoot' => false })
 solvedAppChat = dataAppChat['total']
-solvedAppChat = solvedAppChat.to_i - 38
+solvedAppChat = solvedAppChat.to_i - 33
 
 #Pause for API
 sleep(1)
