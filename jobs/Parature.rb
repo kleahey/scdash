@@ -67,7 +67,7 @@ end
 
 # Get active Applicant tickets
 dataApp = applicant_requests(configuration, 'Ticket?_total_=true&_status_type_=open', :get, nil)
-activeAppTickets = dataApp['total'].to_i
+activeAppTickets = dataApp['total'].to_i - 6
 
 # Get Total Solved Applicant Tickets for Today
 dataSolvedApp = applicant_requests(configuration, "Ticket?_total_=true&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z", :get, nil)
@@ -79,7 +79,7 @@ solvedAppChat = dataAppChat['total'].to_i
 
 # Get active Recommender tickets
 dataRec = recommender_requests(configuration, 'Ticket?_total_=true&_status_type_=open', :get, nil)
-activeRecTickets = dataRec['total'].to_i
+activeRecTickets = dataRec['total'].to_i - 4
 
 # Get Total Solved Recommender Tickets for Today
 dataSolvedRec = recommender_requests(configuration, "Ticket?_total_=true&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z", :get, nil)
