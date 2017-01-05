@@ -3,8 +3,15 @@ require 'mysql2'
 SCHEDULER.every '27m', :first_in => 0 do |job|
 
   # Myql connection
-  db = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "Planet@ry7", :port => 3306, :database => "SATA" )
-
+  db = Mysql2::Client.new(
+                            :host => "ec2-52-10-206-237.us-west-2.compute.amazonaws.com",
+                            :username => "sata",
+                            :password => "Planet@ry7",
+                            :port => 3306,
+                            :database => "SATA",
+                            :sslverify => true,
+                            :sslkey => './config/webserver.pem'
+                            )
   # Mysql query
   sql = "SELECT csr, (SUM(appchat)+SUM(recchat)+SUM(memchat)) AS totals FROM tickets WHERE date=(SELECT MAX(date) FROM tickets) GROUP BY csr HAVING (SUM(appchat)+SUM(recchat)+SUM(memchat)) > 0 ORDER BY totals DESC"
 

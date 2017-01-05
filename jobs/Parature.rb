@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'net/http'
 require 'net/https'
-require 'xmlsimple' # Refer to: http://xml-simple.rubyforge.org/
+require 'xmlsimple'
 require 'pp'
 require 'time'
 
