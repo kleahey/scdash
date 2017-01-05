@@ -9,6 +9,7 @@ class Dashing.Clock extends Dashing.Widget
     h = today.getHours()
     m = today.getMinutes()
     s = today.getSeconds()
+    h = @formatTime2(h)
     m = @formatTime(m)
     s = @formatTime(s)
     @set('time', h + ":" + m + ":" + s)
@@ -16,3 +17,6 @@ class Dashing.Clock extends Dashing.Widget
 
   formatTime: (i) ->
     if i < 10 then "0" + i else i
+
+  formatTime2: (j) ->
+    if j > 12 then j - 12 else j
