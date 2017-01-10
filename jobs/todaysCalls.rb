@@ -27,6 +27,8 @@ ticketTotals = data.map do |row|
     }
   end
 
+ticketTotals.reverse!
+
 send_event('todaysCalls', { items: ticketTotals })
 
 end
