@@ -87,12 +87,8 @@ yesterdaySolvedTickets = solvedAppTickets + solvedRecTickets
 # Calculate the Total Number of Yesterday's Chats
 yesterdaySolvedChats = solvedAppChat + solvedRecChat
 
-# Calculate the Total Number of Today's Interactions
-totalInteractions = yesterdaySolvedTickets + yesterdaySolvedChats
-
 #Send job information to widgets
 send_event('yesterdaySolvedTickets', { current: yesterdaySolvedTickets } )
 send_event('yesterdaySolvedChats', { current: yesterdaySolvedChats } )
-send_event('totalInteractions', { current: totalInteractions } )
 
 end
