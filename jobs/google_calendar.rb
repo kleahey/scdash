@@ -1,4 +1,7 @@
 require 'google/apis/calendar_v3'
+require 'google/api_client/client_secrets'
+require 'json'
+require 'sinatra'
 require 'googleauth'
 require 'googleauth/stores/file_token_store'
 
@@ -17,26 +20,36 @@ SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 # the user's default browser will be launched to approve the request.
 #
 # @return [Google::Auth::UserRefreshCredentials] OAuth2 credentials
-def authorize
-  FileUtils.mkdir_p(File.dirname(CREDENTIALS_PATH))
+enable :sessions
+set :session_secret, 'setme'
 
-  client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
-  token_store = Google::Auth::Stores::FileTokenStore.new(file: CREDENTIALS_PATH)
-  authorizer = Google::Auth::UserAuthorizer.new(
-    client_id, SCOPE, token_store)
-  user_id = 'default'
-  credentials = authorizer.get_credentials(user_id)
-  if credentials.nil?
-    url = authorizer.get_authorization_url(
-      base_url: OOB_URI)
-    puts "Open the following URL in the browser and enter the " +
-         "resulting code after authorization"
-    puts url
-    code = gets
-    credentials = authorizer.get_and_store_credentials_from_code(
-      user_id: user_id, code: code, base_url: OOB_URI)
+get '/' do
+  unless session.has_key?(:credentials)
+    redirect to('/oauth2callback')
   end
-  credentials
+  client_opts = JSON.parse(session[:credentials])
+  auth_client = Signet::OAuth2::Client.new(client_opts)
+  drive = Google::Apis::CalendarV3::DriveService.new
+  files = drive.list_files(options: { authorization: auth_client })
+  "<pre>#{JSON.pretty_generate(files.to_h)}</pre>"
+end
+
+get '/oauth2callback' do
+  client_secrets = Google::APIClient::ClientSecrets.load
+  auth_client = client_secrets.to_authorization
+  auth_client.update!(
+    :scope => 'https://www.googleapis.com/auth/drive.metadata.readonly',
+    :redirect_uri => url('/oauth2callback'))
+  if request['code'] == nil
+    auth_uri = auth_client.authorization_uri.to_s
+    redirect to(auth_uri)
+  else
+    auth_client.code = request['code']
+    auth_client.fetch_access_token!
+    auth_client.client_secret = nil
+    session[:credentials] = auth_client.to_json
+    redirect to('https://vast-shore-30956.herokuapp.com/today')
+  end
 end
 
 SCHEDULER.every '15m', :first_in => 0 do |job|
