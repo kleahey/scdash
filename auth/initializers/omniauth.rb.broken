@@ -1,0 +1,7 @@
+#config/initalizers/omniauth.rb
+Rails.application.config.middleware.use OmniAuth::Builder do
+ provider :google_oauth2, , '140923935560-s36uheubfbi4fhue1q2vgcmgtv37adm1.apps.googleusercontent.com', '2nigIhP8dLJYQhmdXg5FIVWD' {
+   access_type: 'offline',
+   approval_prompt: 'force',
+   scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar',
+ }
