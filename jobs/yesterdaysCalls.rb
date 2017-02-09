@@ -7,14 +7,14 @@ ACUITY_VIEW_URL = 'https://acuityscheduling.com/api/v1/appointments?minDate=' + 
 ACUITY_USERNAME = '11579503'
 ACUITY_PASSWORD = '9cd81dfd631902bcc731e2711f2cc7a2'
 
-SCHEDULER.every '1h', :first_in => 1 do |job|
-
 class Acuity
   include HTTParty
   format :json
   base_uri ACUITY_URL
   basic_auth ACUITY_USERNAME, ACUITY_PASSWORD
 end
+
+SCHEDULER.every '1h', :first_in => 1 do |job|
 
 result = Acuity.get(ACUITY_VIEW_URL)
 
