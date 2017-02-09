@@ -32,11 +32,11 @@ end
 
 
 def temperature_units
-  'metric'.eql?(UNITS) ? 'C' : 'F'
+  'metric'.eql?(UNITS) ? 'C' : 'K'
 end
 
-def color_temperature(temp_f)
-  case temp_f.to_i
+def color_temperature(current_temp)
+  case current_temp.to_i
   when 85..150
     '#FF3300'
   when 76..84
