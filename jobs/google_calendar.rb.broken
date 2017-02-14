@@ -1,85 +1,55 @@
 require 'google/apis/calendar_v3'
-require 'google/api_client/client_secrets'
+require 'googleauth'
+require 'googleauth/stores/file_token_store'
 require 'sinatra'
-require 'logger'
 
-enable :sessions
+require 'fileutils'
 
-def logger; settings.logger end
 
-def calendar; settings.calendar; end
+CLIENT_SECRETS_PATH = 'assets/client_secret.json'
+APPLICATION_NAME = 'SCDash'
 
-def user_credentials
-  # Build a per-request oauth credential based on token stored in session
-  # which allows us to use a shared API client.
-  @authorization ||= (
-    auth = settings.authorization.dup
-    auth.redirect_uri = to('/oauth2callback')
-    auth.update_token!(session)
-    auth
-  )
-end
-
-configure do
-  log_file = File.open('calendar.log', 'a+')
-  log_file.sync = true
-  logger = Logger.new(log_file)
-  logger.level = Logger::DEBUG
-
-  Google::Apis::ClientOptions.default.application_name = 'Ruby Calendar sample'
-  Google::Apis::ClientOptions.default.application_version = '1.0.0'
-  calendar_api = Google::Apis::CalendarV3::CalendarService.new
-
-  client_secrets = Google::APIClient::ClientSecrets.load('./config/client_secrets.json')
-  authorization = client_secrets.to_authorization
-  authorization.scope = 'https://www.googleapis.com/auth/calendar'
-
-  set :authorization, authorization
-  set :logger, logger
-  set :calendar, calendar_api
-end
-
-before do
-  # Ensure user has authorized the app
-  unless user_credentials.access_token || request.path_info =~ /^\/oauth2/
-    redirect to('/oauth2authorize')
+get '/' do
+  unless session.has_key?(:credentials)
+    redirect to('/oauth2callback')
   end
-end
-
-after do
-  # Serialize the access/refresh token to the session and credential store.
-  session[:access_token] = user_credentials.access_token
-  session[:refresh_token] = user_credentials.refresh_token
-  session[:expires_in] = user_credentials.expires_in
-  session[:issued_at] = user_credentials.issued_at
-end
-
-get '/oauth2authorize' do
-  # Request authorization
-  redirect user_credentials.authorization_uri.to_s, 303
+  client_opts = JSON.parse(session[:credentials])
+  auth_client = Signet::OAuth2::Client.new(client_opts)
+  calendar = Google::Apis::CalendarV3::CalendarService.new
 end
 
 get '/oauth2callback' do
-  # Exchange token
-  user_credentials.code = params[:code] if params[:code]
-  user_credentials.fetch_access_token!
-  redirect to('/')
+  client_secrets = Google::APIClient::ClientSecrets.load('assets/client_secrets.json')
+  auth_client = client_secrets.to_authorization
+  auth_client.update!(
+    :scope => 'https://www.googleapis.com/auth/calendar.metadata.readonly',
+    :redirect_uri => url('/oauth2callback'))
+  if request['code'] == nil
+    auth_uri = auth_client.authorization_uri.to_s
+    redirect to(auth_uri)
+  else
+    auth_client.code = request['code']
+    auth_client.fetch_access_token!
+    auth_client.client_secret = nil
+    session[:credentials] = auth_client.to_json
+    redirect to('/')
+  end
 end
 
-SCHEDULER.every '15m', :first_in => 0 do |job|
+# SCHEDULER.every '15m', :first_in => 0 do |job|
 
-  service = Google::Apis::CalendarV3::CalendarService.new
-  service.authorization = user_credentials
+  # Initialize the API
+  calendar = Google::Apis::CalendarV3::CalendarService.new
 
-  # Fetch list of events on the user's default calandar
+  # Fetch the next 10 events from the calendar
   calendar_id = 'commonapp.org_ipqcbb48uos49b390bk1bnkj04@group.calendar.google.com'
-  response = service.list_events(calendar_id,
+  response = calendar.list_events(calendar_id,
                                max_results: 10,
                                single_events: true,
                                order_by: 'startTime',
                                time_min: Time.now.iso8601)
 
-  calendarEntries = response.items.each do |row|
+  calendarEntries = response.items.map do |row|
     if row.start.date <= Time.now.strftime('%Y-%m-%d') then
       row = {
         :label => row.summary
@@ -87,8 +57,6 @@ SCHEDULER.every '15m', :first_in => 0 do |job|
     end
   end
 
-puts calendarEntries
+#   send_event('calendar', { items: calendarEntries })
 
-#send_event('calendar', { items: calendarEntries })
-
-end
+# end
