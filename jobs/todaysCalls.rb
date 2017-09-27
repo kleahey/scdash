@@ -1,22 +1,19 @@
 require 'httparty'
 require 'date'
+require 'json'
 
-#Enter the Acuity API information
-ACUITY_URL = 'https://acuityscheduling.com/api/v1/appointments'
-ACUITY_VIEW_URL = 'https://acuityscheduling.com/api/v1/appointments?minDate=' + Date.today.strftime('%Y-%m-%d') + '&maxDate=' + Date.today.strftime('%Y-%m-%d')
-ACUITY_USERNAME = '11579503'
-ACUITY_PASSWORD = '9cd81dfd631902bcc731e2711f2cc7a2'
+view_url = "#{ENV["ACUITY_VIEW_URL"]}" + "#{Date.today.strftime('%Y-%m-%d')}" + "&maxDate=" + "#{Date.today.strftime('%Y-%m-%d')}"
 
 class Acuity
   include HTTParty
   format :json
-  base_uri ACUITY_URL
-  basic_auth ACUITY_USERNAME, ACUITY_PASSWORD
+  base_uri ENV["ACUITY_URL"]
+  basic_auth ENV["ACUITY_USERNAME"], ENV["ACUITY_PASSWORD"]
 end
 
 SCHEDULER.every '1h', :first_in => 1 do |job|
 
-result = Acuity.get(ACUITY_VIEW_URL)
+result = Acuity.get(view_url)
 
 data = result.parsed_response
 
