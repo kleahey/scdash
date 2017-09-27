@@ -17,14 +17,14 @@ result = Acuity.get(view_url)
 
 data = result.parsed_response
 
-ticketTotals = data.map do |row|
+
+  ticketTotals = data.map do |row|
     row = {
-      :label => row['time'],
-      :value => row['calendar']
+      :label => row['calendar'],
+      :value => row['time']
     }
   end
-
-ticketTotals.reverse!
+  ticketTotals.reverse!
 
 send_event('todaysCalls', { items: ticketTotals })
 
