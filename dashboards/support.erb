@@ -1,8 +1,8 @@
 <script type='text/javascript'>
 $(function() {
   // These settings override the defaults set in application.coffee. You can do this on a per dashboard basis.
-  Dashing.widget_base_dimensions = [370, 340]
-  Dashing.numColumns = 5
+  Dashing.widget_base_dimensions = [320, 360]
+  Dashing.numColumns = 6
   Dashing.cycleDashboards({timeInSeconds: 30, stagger: true});
 });
 </script>
@@ -21,19 +21,19 @@ $(function() {
       <i class="fa fa-clock-o icon-background"></i>
     </li>
 
-    <li data-row="3" data-col="1" data-sizex="1" data-sizey="1">
+    <li data-row="3" data-col="6" data-sizex="1" data-sizey="1">
       <div data-view="Image" data-image="/logo.png"></div>
     </li>
 
     <li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
-      <div data-id="welcome" data-view="Text" style="background-color: #E67125;" data-title="Daily Briefing" data-text="Check your schedule for Christmas and Deadline changes.</br>Release this morning. Known issues will be updated soon!</br>Service and Support meeting tomorrow at 11:15." data-moreinfo="Let a manager know if something needs to be added!"></div>
+      <div data-id="welcome" data-view="Text" style="background-color: #E67125;" data-title="Daily Briefing" data-text="Schedule-a-Call & Chat are currently offline." data-moreinfo="Let a manager know if something needs to be added!"></div>
     </li>
 
     <li data-row="3" data-col="3" data-sizex="1" data-sizey="1">
       <div data-id="todaysCalls" style="background-color:#65b193;" data-view="List" data-unordered="true" data-title="Today's Scheduled Calls" data-moreinfo=""></div>
     </li>
 
-    <li data-row="3" data-col="2" data-sizex="1" data-sizey="1">
+    <li data-row="2" data-col="3" data-sizex="1" data-sizey="1">
       <div data-id="calendar" style="background-color:#00B7CE" data-view="List" data-unordered="true" data-title="In/Out" data-moreinfo="Lists information for today only."></div>
     </li>
 
@@ -41,77 +41,41 @@ $(function() {
       <div data-id="activeAppTickets" data-view="Hotness" data-title="Active Applicant Tickets" data-cool="20" data-warm="50"></div>
     </li>
 
-    <li data-row="1" data-col="5" data-sizex="1" data-sizey="1">
+    <li data-row="2" data-col="4" data-sizex="1" data-sizey="1">
       <div data-id="activeRecTickets" data-view="Hotness" data-title="Active Recommender Tickets" data-cool="20" data-warm="50"></div>
     </li>
 
-    <li data-row="2" data-col="1" data-sizex="1" data-sizey="1">
+    <li data-row="1" data-col="5" data-sizex="1" data-sizey="1">
       <div data-id="solvedAppTickets" style="background-color: #A154A1" data-view="Number" data-title="Today's Solved Applicant Tickets"></div>
       <i class="fa fa-ticket-o icon-background"></i>
     </li >
 
-    <li data-row="2" data-col="2" data-sizex="1" data-sizey="1">
+    <li data-row="2" data-col="5" data-sizex="1" data-sizey="1">
       <div data-id="solvedRecTickets" style="background-color:#ED145B;" data-view="Number" data-title="Today's Solved Recommender Tickets"></div>
       <i class="fa fa-ticket-o icon-background"></i>
     </li >
 
-    <li data-row="2" data-col="3" data-sizex="1" data-sizey="1">
+    <li data-row="1" data-col="6" data-sizex="1" data-sizey="1">
       <div data-id="totalSolvedChats" data-view="Number" style="background-color:#981a36;" data-title="Today's Chat Totals"></div>
       <i class="fa fa-ticket-o icon-background"></i>
     </li >
 
-    <li data-row="2" data-col="4" data-sizex="2" data-sizey="2">
+    <li data-row="2" data-col="6" data-sizex="1" data-sizey="1">
       <div data-id="totalInteractions" style="background-color:#034F9B;" data-view="Number" data-title="Today's Total Applicant and Recommender Interactions"></div>
       <i class="fa fa-ticket-o icon-background"></i>
     </li >
 
-  </ul>
-</div>
-
-<div class="gridster">
-  <ul>
-    <li data-row="1" data-col="2" data-sizex="1" data-sizey="1">
-      <div data-view="Clock" style="background-color:#96c23d"></div>
-      <i class="fa fa-clock-o icon-background"></i>
-    </li>
-
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-view="Image" data-image="/logo.png"></div>
-    </li>
-
-    <li data-row="1" data-col="3" data-sizex="2" data-sizey="1">
-      <div data-id="welcome" data-view="Text" style="background-color: #E67125;" data-title="Daily Briefing" data-text="Check your schedule for Christmas and Deadline changes.</br>Release this morning. Known issues will be updated soon!</br>Service and Support meeting tomorrow at 11:15." data-moreinfo="Let a manager know if something needs to be added!"></div>
-    </li>
-
     <li data-row="2" data-col="1" data-sizex="1" data-sizey="2">
-      <div data-id="ticketsAnswered" data-view="List" style="background-color: #A154A1;" data-unordered="true" data-title="Tickets" data-moreinfo="Total Tickets Answered Yesterday"></div>
+      <div data-id="ticketsAnswered" data-view="List" style="background-color: #A154A1;" data-unordered="true" data-title="Tickets" data-moreinfo="Real-Time Tickets Solved Today"></div>
     </li>
 
     <li data-row="2" data-col="2" data-sizex="1" data-sizey="2">
-      <div data-id="chatsAnswered" style="background-color: #678c93;" data-view="List" data-unordered="true" data-title="Chats" data-moreinfo="Total Chats Answered Yesterday"></div>
+      <div data-id="chatsAnswered" style="background-color: #678c93;" data-view="List" data-unordered="true" data-title="Chats" data-moreinfo="Real-Time Chats Solved Today"></div>
     </li>
 
-    <li data-row="3" data-col="5" data-sizex="1" data-sizey="1">
-      <div data-id="yesterdaysCalls" style="background-color:#65b193;" data-view="List" data-unordered="true" data-title="Yesterday's Call Totals" data-moreinfo=""></div>
-    </li>
-
-    <li data-row="2" data-col="3" data-sizex="2" data-sizey="1">
+    <li data-row="3" data-col="4" data-sizex="2" data-sizey="1">
       <div data-id="twitter_mentions" data-view="Comments" style="background-color:#00B7CE;" data-moreinfo="Recent Tweets tagged with #CommonApp"></div>
       <i class="fa fa-twitter icon-background"></i>
-    </li>
-
-    <li data-row="1" data-col="5" data-sizex="1" data-sizey="1">
-      <div data-id="yesterdaySolvedTickets" data-view="Number" style="background-color:#034F9B;" data-title="Yesterday's Total Tickets" style="background-color:#96bf48;"></div>
-      <i class="fa fa-ticket icon-background"></i>
-    </li>
-
-    <li data-row="2" data-col="5" data-sizex="1" data-sizey="1">
-      <div data-id="yesterdaySolvedChats" data-view="Number" style="background-color:#981a36;" data-title="Yesterday's Total Chats" style="background-color:#96bf48;"></div>
-      <i class="fa fa-commenting-o icon-background"></i>
-    </li >
-
-    <li data-row="3" data-col="3" data-sizex="2" data-sizey="1">
-      <div data-id="mychart" data-view="GoogleColumn"  style="background-color:#edebe6;" data-title="Category Trends: Last 4 Weeks" data-colors="#8B0707,#E67300"></div>
     </li>
 
   </ul>
