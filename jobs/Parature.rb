@@ -4,14 +4,15 @@ require 'net/https'
 require 'xmlsimple'
 require 'pp'
 require 'time'
+require 'figaro'
 
-configuration =
+$configuration =
 {
-  :hostname   => 'd19.parature.com',
-  :account_id => '33011',
-  :token      => 'Sn5wkZHGHZhwkHUvJ3OIvqhS0eyiZrHcOWNIrYrTh0In16VGnboqlREsm@mUFkbW7GxQQx7kcwGiSzHRlrnW6jlM1ZnN@8SdxKsZYHJt2fQ=',
-  :applicant_id => '33013', # ID for a specific example customer you want to use
-  :recommender_id => '33014'  # ID for a specific example CSR you want to use
+  :hostname   => "d19.parature.com",
+  :account_id => "33011",
+  :token      => "Sn5wkZHGHZhwkHUvJ3OIvqhS0eyiZrHcOWNIrYrTh0In16VGnboqlREsm@mUFkbW7GxQQx7kcwGiSzHRlrnW6jlM1ZnN@8SdxKsZYHJt2fQ=",
+  :applicant_id => "33013", # ID for a specific example customer you want to use
+  :recommender_id => "33014"  # ID for a specific example CSR you want to use
 }
 
 SCHEDULER.every '15s', :first_in => 0 do |job|
@@ -66,27 +67,27 @@ end
 
 
 # Get active Applicant tickets
-dataApp = applicant_requests(configuration, 'Ticket?_total_=true&_status_type_=open', :get, nil)
+dataApp = applicant_requests($configuration, 'Ticket?_total_=true&_status_type_=open', :get, nil)
 activeAppTickets = dataApp['total'].to_i - 6
 
 # Get Total Solved Applicant Tickets for Today
-dataSolvedApp = applicant_requests(configuration, "Ticket?_total_=true&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z", :get, nil)
+dataSolvedApp = applicant_requests($configuration, "Ticket?_total_=true&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z", :get, nil)
 solvedAppTickets = dataSolvedApp['total'].to_i
 
 # Get Total Solved Applicant Chats for Today
-dataAppChat = applicant_requests(configuration, "Chat?_total_=yes&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
+dataAppChat = applicant_requests($configuration, "Chat?_total_=yes&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
 solvedAppChat = dataAppChat['total'].to_i
 
 # Get active Recommender tickets
-dataRec = recommender_requests(configuration, 'Ticket?_total_=true&_status_type_=open', :get, nil)
+dataRec = recommender_requests($configuration, 'Ticket?_total_=true&_status_type_=open', :get, nil)
 activeRecTickets = dataRec['total'].to_i - 4
 
 # Get Total Solved Recommender Tickets for Today
-dataSolvedRec = recommender_requests(configuration, "Ticket?_total_=true&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z", :get, nil)
+dataSolvedRec = recommender_requests($configuration, "Ticket?_total_=true&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z", :get, nil)
 solvedRecTickets = dataSolvedRec['total'].to_i
 
 # Get Total Recommender Chats for Today
-dataRecChat = recommender_requests(configuration, "Chat?_total_=yes&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
+dataRecChat = recommender_requests($configuration, "Chat?_total_=yes&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
 solvedRecChat = dataRecChat['total'].to_i
 
 # Calculate the Total Number of Today's Chats
@@ -95,6 +96,58 @@ totalSolvedChats = solvedAppChat + solvedRecChat
 # Calculate the Total Number of Today's Interactions
 totalInteractions = solvedAppTickets + solvedRecTickets + totalSolvedChats
 
+# List all solved ticket totals by Team Member
+array = []
+
+applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=200", :get, nil)
+applicant['Ticket'].map do |x|
+  array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
+end
+
+recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=200", :get, nil)
+recommender['Ticket'].map do |x|
+  array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
+end
+
+counts = Hash.new(0)
+array.each { |array| counts[array] += 1 }
+
+counts = counts.sort_by { |k, v| v }.reverse
+ticketTotals = counts.map do |k, v|
+  row = {
+    :label => k,
+    :value => v
+  }
+end
+
+# List all chat totals by Team Member
+chat_array = []
+
+applicant_chat = applicant_requests($configuration, "Chat?_total_=false&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
+
+  applicant_chat['Chat'].map do |x|
+    chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"])
+  end
+
+recommender_chat = recommender_requests($configuration, "Chat?_total_=false&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
+
+
+  recommender_chat['Chat'].map do |x|
+    chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"])
+  end
+
+chat_counts = Hash.new(0)
+chat_array.each { |array| chat_counts[array] += 1 }
+
+chat_counts = chat_counts.sort_by { |k, v| v }.reverse
+chatTotals = chat_counts.map do |k, v|
+  row = {
+    :label => k,
+    :value => v
+  }
+end
+
+
 #Send job information to widgets
 send_event('activeAppTickets', { value: activeAppTickets } )
 send_event('activeRecTickets', { value: activeRecTickets } )
@@ -102,5 +155,7 @@ send_event('solvedAppTickets', { current: solvedAppTickets } )
 send_event('solvedRecTickets', { current: solvedRecTickets } )
 send_event('totalSolvedChats', { current: totalSolvedChats } )
 send_event('totalInteractions', { current: totalInteractions } )
+send_event('ticketsAnswered', { items: ticketTotals } )
+send_event('chatsAnswered', { items: chatTotals} )
 
 end
