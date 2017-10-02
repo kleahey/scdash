@@ -1,8 +1,7 @@
 require 'dashing'
-require 'figaro'
 
 configure do
-  set :auth_token, 'YOUR_AUTH_TOKEN'
+  set :auth_token, 'YDf3JwRzCe87k6WH5abMk'
 
   helpers do
     def protected!

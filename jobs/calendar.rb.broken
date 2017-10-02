@@ -1,0 +1,29 @@
+require 'google/apis/calendar_v3'
+require 'json'
+require 'googleauth'
+require 'googleauth/stores/redis_token_store'
+require 'redis'
+
+calendarID = "commonapp.org_ipqcbb48uos49b390bk1bnkj04@group.calendar.google.com" # Calendar ID.
+
+def authorize
+  scope = "https://www.googleapis.com/auth/calendar"
+  authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
+    scope: scope,
+    json_key_io: File.open("/Users/kleahey/Git/scdash/config/dashboard-f482890a0e8d.json")
+  )
+  auth_client = authorizer.dup
+  auth_client.sub = "kleahey@commonapp.org"
+  auth_client.fetch_access_token!
+  return auth_client
+end
+
+calendar = Google::Apis::CalendarV3::CalendarService.new
+calendar.authorization = authorize
+
+response = calendar.list_events(
+  calendarID,
+  single_events: true,
+  order_by: "startTime",
+  time_min: Time.now.iso8601
+)

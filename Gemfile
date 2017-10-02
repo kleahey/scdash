@@ -14,6 +14,5 @@ gem 'rack', '~> 1.5.4'
 gem 'figaro', :git => 'https://github.com/bpaquet/figaro.git', :branch => 'sinatra'
 gem 'xml-simple'
 gem 'nokogiri'
-gem 'google-api-client', :require => 'google/api_client'
-gem 'omniauth-google-oauth2',
-:git => 'https://github.com/zquestz/omniauth-google-oauth2.git'
+gem 'google-api-client', '0.9.1'
+gem 'redis'
