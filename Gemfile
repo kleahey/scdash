@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 
+ruby '2.2.5'
 gem 'dashing'
 
 ## Remove this if you don't need a twitter widget.
+gem 'bundler'
 gem 'twitter', '>= 5.9.0'
 gem 'forecast_io'
 gem 'mysql2'
