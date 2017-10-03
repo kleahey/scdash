@@ -124,29 +124,17 @@ end
 chat_array = []
 
 applicant_chat = applicant_requests($configuration, "Chat?_total_=false&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
-
-  applicant_chat['Chat'].map do |x|
-    chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"])
-  end
+applicant_chat['Chat'].map { |x| chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"]) }
 
 recommender_chat = recommender_requests($configuration, "Chat?_total_=false&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
 
-
-  recommender_chat['Chat'].map do |x|
-    chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"])
-  end
+# recommender_chat['Chat'].each { |x| chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"]) }
 
 chat_counts = Hash.new(0)
 chat_array.each { |array| chat_counts[array] += 1 }
 
 chat_counts = chat_counts.sort_by { |k, v| v }.reverse
-chatTotals = chat_counts.map do |k, v|
-  row = {
-    :label => k,
-    :value => v
-  }
-end
-
+chatTotals = chat_counts.map { |k, v| row = { :label => k, :value => v } }
 
 #Send job information to widgets
 send_event('activeAppTickets', { value: activeAppTickets } )
@@ -156,6 +144,6 @@ send_event('solvedRecTickets', { current: solvedRecTickets } )
 send_event('totalSolvedChats', { current: totalSolvedChats } )
 send_event('totalInteractions', { current: totalInteractions } )
 send_event('ticketsAnswered', { items: ticketTotals } )
-send_event('chatsAnswered', { items: chatTotals} )
+send_event('chatsAnswered', { items: chatTotals } )
 
 end
