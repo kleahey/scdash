@@ -124,11 +124,20 @@ end
 chat_array = []
 
 applicant_chat = applicant_requests($configuration, "Chat?_total_=false&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
-applicant_chat['Chat'].map { |x| chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"]) }
+
+begin
+  applicant_chat['Chat'].map { |x| chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"]) }
+rescue
+  puts "Error reading Applicant chats."
+end
 
 recommender_chat = recommender_requests($configuration, "Chat?_total_=false&Date_Created_min_=#{Time.now.strftime('%Y-%m-%d')}T05:00:00Z&Date_Ended_min_=_today_", :get, nil)
 
-# recommender_chat['Chat'].each { |x| chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"]) }
+begin
+  recommender_chat['Chat'].each { |x| chat_array.push(x["Initial_Csr"][0]["Csr"][0]["Full_Name"][0]["content"]) }
+rescue
+  puts "Error reading Recommender chats."
+end
 
 chat_counts = Hash.new(0)
 chat_array.each { |array| chat_counts[array] += 1 }
