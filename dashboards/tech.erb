@@ -1,0 +1,32 @@
+<script type='text/javascript'>
+$(function() {
+  // These settings override the defaults set in application.coffee. You can do this on a per dashboard basis.
+  Dashing.widget_base_dimensions = [415, 360]
+  Dashing.numColumns = 6
+  Dashing.cycleDashboards({timeInSeconds: 30, stagger: true});
+});
+</script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+</script>
+
+<% content_for :title do %>Products & Technology Team Dashboard<% end %>
+
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="1" data-sizex="7" data-sizey="4">
+      <div data-id="image" data-view="Image" data-title="Roadmap" data-image="/currentRoadmap.png"></div>
+    </li>
+  </ul>
+</div>
+
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-view="Clock" style="background-color:#96c23d"></div>
+      <i class="fa fa-clock-o icon-background"></i>
+    </li>
+  </ul>
+</div>
