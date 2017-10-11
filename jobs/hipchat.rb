@@ -17,7 +17,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
 
   client = HipChat::Client.new("qPfNioZgUtyMxsqOhtvyATwqRBfxUmoc5ikj4fwz")
 
-  result = client['DevDash'].history()
+  result = client['Solutions Center Dashboard'].history()
 
   result = JSON.parse(result)
 
