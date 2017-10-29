@@ -68,7 +68,7 @@ def recommender_requests(configuration, request_params, request_method, request_
   XmlSimple.xml_in(response.body, { 'KeepRoot' => false })
 end
 
-SCHEDULER.cron '58 7 * * 2-6', :first_in => 30 do |job|
+SCHEDULER.cron '58 7 * * 0-6' do |job|
 
 # Get a list of all chat IDs from Yesterday
 applicantArray = []
