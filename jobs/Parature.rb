@@ -4,7 +4,6 @@ require 'net/https'
 require 'xmlsimple'
 require 'pp'
 require 'time'
-require 'figaro'
 
 $configuration =
 {
