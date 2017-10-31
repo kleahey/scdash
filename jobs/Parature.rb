@@ -14,7 +14,7 @@ $configuration =
   :recommender_id => "33014"  # ID for a specific example CSR you want to use
 }
 
-SCHEDULER.every '15s', :first_in => 30 do |job|
+SCHEDULER.every '90s', :first_in => 30 do |job|
 
 # Connect to Parature's API for Applicant accounts
 def applicant_requests(configuration, request_params, request_method, request_body = nil)
