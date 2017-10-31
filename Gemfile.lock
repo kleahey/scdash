@@ -40,6 +40,7 @@ GEM
       faraday
       hashie
       multi_json
+    get_process_mem (0.2.1)
     google-api-client (0.15.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 0.5)
@@ -106,6 +107,9 @@ GEM
       ttfunk (~> 1.5)
     public_suffix (3.0.0)
     puma (3.10.0)
+    puma_worker_killer (0.1.0)
+      get_process_mem (~> 0.2)
+      puma (>= 2.7, < 4)
     rack (1.5.5)
     rack-protection (1.5.3)
       rack
@@ -189,6 +193,7 @@ DEPENDENCIES
   nokogiri
   prawn
   puma
+  puma_worker_killer
   rack (~> 1.5.4)
   rest-client
   twitter (>= 5.9.0)
