@@ -98,12 +98,22 @@ totalInteractions = solvedAppTickets + solvedRecTickets + totalSolvedChats
 # List all solved ticket totals by Team Member
 array = []
 
-applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=200", :get, nil)
+applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500&_startPage_=1", :get, nil)
 applicant['Ticket'].map do |x|
   array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
 end
 
-recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=200", :get, nil)
+applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=2", :get, nil)
+applicant['Ticket'].map do |x|
+  array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
+end
+
+recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=1", :get, nil)
+recommender['Ticket'].map do |x|
+  array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
+end
+
+recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=2", :get, nil)
 recommender['Ticket'].map do |x|
   array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
 end
