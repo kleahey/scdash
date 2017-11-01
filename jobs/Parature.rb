@@ -14,7 +14,7 @@ $configuration =
   :recommender_id => "33014"  # ID for a specific example CSR you want to use
 }
 
-SCHEDULER.every '10m', :first_in => 90 do |job|
+SCHEDULER.every '5m', :first_in => 0 do |job|
 
 # Connect to Parature's API for Applicant accounts
 def applicant_requests(configuration, request_params, request_method, request_body = nil)
@@ -98,72 +98,30 @@ totalInteractions = solvedAppTickets + solvedRecTickets + totalSolvedChats
 # List all solved ticket totals by Team Member
 array = []
 
-applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500&_startPage_=1", :get, nil)
-applicant['Ticket'].map do |x|
-  array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
-end
+i = 0
 
-begin
-  applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=2", :get, nil)
+loop do
+  i += 1
+  applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500&_startPage_=#{i}", :get, nil)
+  applicant.to_json
+  break if applicant['Ticket'].nil?
   applicant['Ticket'].map do |x|
     array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
   end
-rescue
-  puts "Error on applicant page 2."
+  puts "Applicant page " + i.to_s
 end
 
-begin
-  applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=3", :get, nil)
-  applicant['Ticket'].map do |x|
-    array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
-  end
-rescue
-  puts "Error on applicant page 3."
-end
+i = 0
 
-begin
-  applicant = applicant_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=7&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=4", :get, nil)
-  applicant['Ticket'].map do |x|
-    array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
-  end
-rescue
-  puts "Error on applicant page 4."
-end
-
-begin
-  recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=1", :get, nil)
+loop do
+  i += 1
+  recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500&_startPage_=#{i}", :get, nil)
+  recommender.to_json
+  break if recommender['Ticket'].nil?
   recommender['Ticket'].map do |x|
     array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
   end
-rescue
-  puts "Error on recommender page 1."
-end
-
-begin
-  recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=2", :get, nil)
-  recommender['Ticket'].map do |x|
-    array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
-  end
-rescue
-  puts "Error on recommender page 2."
-end
-
-begin
-  recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=3", :get, nil)
-  recommender['Ticket'].map do |x|
-    array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
-  end
-rescue
-  puts "Error on recommender page 3."
-end
-
-begin
-  recommender = recommender_requests($configuration, "Ticket?_total_=false&Date_Created_min_=_last_week_&Ticket_Status_id_=13&Date_Updated_min_=#{Time.now.strftime('%Y-%m-%d')}T04:00:00Z&_pageSize_=500_startPage_=4", :get, nil)
-  recommender['Ticket'].map do |x|
-    array.push(x["Assigned_To"][0]["Csr"][0]["Full_Name"][0]["content"])
-  end
-rescue
-  puts "Error on recommender page 4."
+  puts "Recommender page " + i.to_s
 end
 
 counts = Hash.new(0)

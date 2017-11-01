@@ -1,0 +1,55 @@
+<script type='text/javascript'>
+$(function() {
+  // These settings override the defaults set in application.coffee. You can do this on a per dashboard basis.
+  Dashing.widget_base_dimensions = [630, 228]
+  Dashing.numColumns = 4
+});
+</script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+</script>
+
+<% content_for :title do %>Solutions Center Dashboard<% end %>
+
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="4" data-sizex="1" data-sizey="2">
+      <div data-view="Clock" style="background-color:#96c23d"></div>
+      <i class="fa fa-clock-o icon-background"></i>
+    </li>
+
+    <li data-row="1" data-col="2" data-sizex="2" data-sizey="2">
+      <div data-id="dailyBriefing" data-view="Text" style="background-color: #E67125;" data-title="Daily Briefing" data-text="Welcome to the Solutions Center!" data-moreinfo="Let a manager know if something needs to be added!"></div>
+    </li>
+
+    <li data-row="3" data-col="2" data-sizex="1" data-sizey="2">
+      <div data-id="activeAppTickets" data-view="Hotness" data-title="Active Applicant Tickets" data-cool="20" data-warm="50"></div>
+    </li>
+
+    <li data-row="3" data-col="3" data-sizex="1" data-sizey="2">
+      <div data-id="activeRecTickets" data-view="Hotness" data-title="Active Recommender Tickets" data-cool="20" data-warm="50"></div>
+    </li>
+
+    <li data-row="5" data-col="2" data-sizex="1" data-sizey="2">
+      <div data-id="solvedAppTickets" style="background-color:#96c23d" data-view="Number" data-title="Today's Solved Applicant Tickets"></div>
+      <i class="fa fa-ticket-o icon-background"></i>
+    </li >
+
+    <li data-row="5" data-col="3" data-sizex="1" data-sizey="2">
+      <div data-id="solvedRecTickets" style="background-color:#ED145B;" data-view="Number" data-title="Today's Solved Recommender Tickets"></div>
+      <i class="fa fa-ticket-o icon-background"></i>
+    </li >
+
+    <li data-row="3" data-col="4" data-sizex="1" data-sizey="4">
+      <div data-id="totalInteractions" style="background-color:#034F9B;" data-view="Number" data-title="Today's Total Applicant and Recommender Interactions"></div>
+      <i class="fa fa-ticket-o icon-background"></i>
+    </li >
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="6">
+      <div data-id="ticketsAnswered" data-view="List" style="background-color: #A154A1;" data-unordered="true" data-title="Tickets" data-moreinfo="Real-Time Tickets Solved Today"></div>
+    </li>
+
+  </ul>
+</div>
