@@ -6,13 +6,13 @@ configure do
   helpers do
     def protected!
       # Define allowed ips
-      @ips = ['207.243.114.66', '127.0.0.1']
+      # @ips = ['207.243.114.66', '127.0.0.1']
 
       # If request ip not included
-      if not @ips.include? request.ip
+      # if not @ips.include? request.ip
         # Deny request
-        throw(:halt, [401, "Not authorized\n"])
-      end
+        # throw(:halt, [401, "Not authorized\n"])
+      # end
     end
   end
 end
