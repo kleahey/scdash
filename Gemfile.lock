@@ -198,9 +198,3 @@ DEPENDENCIES
   rest-client
   twitter (>= 5.9.0)
   xml-simple
-
-RUBY VERSION
-   ruby 2.2.5p319
-
-BUNDLED WITH
-   1.15.4
