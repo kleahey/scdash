@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-ruby '2.2.5'
 gem 'dashing'
 
 ## Remove this if you don't need a twitter widget.
