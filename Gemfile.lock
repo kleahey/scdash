@@ -31,6 +31,7 @@ GEM
     declarative-option (0.1.0)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
+    elastic-beanstalk (0.0.1)
     equalizer (0.0.11)
     eventmachine (1.2.5)
     execjs (2.0.2)
@@ -182,6 +183,7 @@ DEPENDENCIES
   activesupport
   bundler
   dashing
+  elastic-beanstalk
   forecast_io
   google-api-client
   hipchat
