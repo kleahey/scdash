@@ -3,9 +3,7 @@ source 'https://rubygems.org'
 gem 'dashing'
 gem 'elastic-beanstalk'
 
-group :production do
-  gem 'puma'
-end
+gem 'puma'
 
 ## Remove this if you don't need a twitter widget.
 gem 'bundler'
