@@ -2,7 +2,6 @@ require 'dashing'
 
 configure do
   set :auth_token, ENV['AUTH_TOKEN']
-  set :port, 5000
 
   helpers do
     def protected!
