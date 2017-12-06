@@ -21,52 +21,48 @@ $(function() {
       <i class="fa fa-clock-o icon-background"></i>
     </li>
 
-    <li data-row="3" data-col="6" data-sizex="1" data-sizey="1">
-      <div data-view="Image" data-image="/logo.png"></div>
-    </li>
-
     <li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
       <div data-id="dailyBriefing" data-view="Text" style="background-color: #E67125;" data-title="Daily Briefing" data-text="Welcome to the Solutions Center!" data-moreinfo="Let a manager know if something needs to be added!"></div>
-    </li>
-
-    <li data-row="2" data-col="3" data-sizex="1" data-sizey="2">
-      <div data-id="todaysCalls" style="background-color:#65b193;" data-view="List" data-unordered="true" data-title="Today's Scheduled Calls" data-moreinfo=""></div>
     </li>
 
     <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">
       <div data-id="activeAppTickets" data-view="Hotness" data-title="Active Applicant Tickets" data-cool="20" data-warm="50"></div>
     </li>
 
-    <li data-row="2" data-col="4" data-sizex="1" data-sizey="1">
-      <div data-id="activeRecTickets" data-view="Hotness" data-title="Active Recommender Tickets" data-cool="20" data-warm="50"></div>
-    </li>
-
     <li data-row="1" data-col="5" data-sizex="1" data-sizey="1">
       <div data-id="solvedAppTickets" style="background-color: #A154A1" data-view="Number" data-title="Today's Solved Applicant Tickets"></div>
       <i class="fa fa-ticket-o icon-background"></i>
-    </li >
-
-    <li data-row="2" data-col="5" data-sizex="1" data-sizey="1">
-      <div data-id="solvedRecTickets" style="background-color:#ED145B;" data-view="Number" data-title="Today's Solved Recommender Tickets"></div>
-      <i class="fa fa-ticket-o icon-background"></i>
-    </li >
+    </li>
 
     <li data-row="1" data-col="6" data-sizex="1" data-sizey="1">
       <div data-id="totalSolvedChats" data-view="Number" style="background-color:#981a36;" data-title="Today's Chat Totals"></div>
       <i class="fa fa-ticket-o icon-background"></i>
-    </li >
+    </li>
 
-    <li data-row="2" data-col="6" data-sizex="1" data-sizey="1">
-      <div data-id="totalInteractions" style="background-color:#034F9B;" data-view="Number" data-title="Today's Total Applicant and Recommender Interactions"></div>
-      <i class="fa fa-ticket-o icon-background"></i>
-    </li >
+    <li data-row="2" data-col="1" data-sizex="1" data-sizey="2">
+      <div data-id="chatsAnswered" style="background-color: #678c93;" data-view="List" data-unordered="true" data-title="Chats" data-moreinfo="Real-Time Chats Solved Today"></div>
+    </li>
 
     <li data-row="2" data-col="2" data-sizex="1" data-sizey="2">
       <div data-id="ticketsAnswered" data-view="List" style="background-color: #A154A1;" data-unordered="true" data-title="Tickets" data-moreinfo="Real-Time Tickets Solved Today"></div>
     </li>
 
-    <li data-row="2" data-col="1" data-sizex="1" data-sizey="2">
-      <div data-id="chatsAnswered" style="background-color: #678c93;" data-view="List" data-unordered="true" data-title="Chats" data-moreinfo="Real-Time Chats Solved Today"></div>
+    <li data-row="2" data-col="3" data-sizex="1" data-sizey="2">
+      <div data-id="todaysCalls" style="background-color:#65b193;" data-view="List" data-unordered="true" data-title="Today's Scheduled Calls" data-moreinfo=""></div>
+    </li>
+
+    <li data-row="2" data-col="4" data-sizex="1" data-sizey="1">
+      <div data-id="activeRecTickets" data-view="Hotness" data-title="Active Recommender Tickets" data-cool="20" data-warm="50"></div>
+    </li>
+
+    <li data-row="2" data-col="5" data-sizex="1" data-sizey="1">
+      <div data-id="solvedRecTickets" style="background-color:#ED145B;" data-view="Number" data-title="Today's Solved Recommender Tickets"></div>
+      <i class="fa fa-ticket-o icon-background"></i>
+    </li>
+
+    <li data-row="2" data-col="6" data-sizex="1" data-sizey="1">
+      <div data-id="totalInteractions" style="background-color:#034F9B;" data-view="Number" data-title="Today's Total Applicant and Recommender Interactions"></div>
+      <i class="fa fa-ticket-o icon-background"></i>
     </li>
 
     <li data-row="3" data-col="4" data-sizex="2" data-sizey="1">
@@ -74,44 +70,52 @@ $(function() {
       <i class="fa fa-twitter icon-background"></i>
     </li>
 
+    <li data-row="3" data-col="6" data-sizex="1" data-sizey="1">
+      <div data-view="Image" data-image="/logo.png"></div>
+    </li>
+
   </ul>
 </div>
 
 <div class="gridster">
   <ul>
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="railinfo" data-view="List" style="background-color:#678c93;" data-unordered="true" data-title="Clarendon Station" data-moreinfo="Real-time info from WMATA"></div>
-    </li>
-
-    <li data-row="2" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="railincidents" data-view="List" style="background-color: #A154A1;" data-title="Metro Rail Incidents" data-moreinfo="Real-time info from WMATA"></div>
-    </li>
-
-    <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">
-      <div data-id="hobsons" data-view="Meter" style="background-color:#678c93;" data-title="Clarendon Station Bikeshare" data-min="0" data-max="17" data-moreinfo="Current Number of Available Bikes"></div>
-    </li>
-
-    <li data-row="2" data-col="4" data-sizex="1" data-sizey="1">
-      <div data-id="fillmore" data-view="Meter" style="background-color:#678c93;" data-title="Clarendon Blvd & Fillmore St Bikeshare" data-min="0" data-max="11" data-moreinfo="Current Number of Available Bikes"></div>
-    </li>
-
-    <li data-row="3" data-col="4" data-sizex="1" data-sizey="1">
-      <div data-id="fairfax" data-view="Meter" style="background-color:#678c93;" data-title="Fairfax Dr & Wilson Blvd Bikeshare" data-min="0" data-max="10" data-moreinfo="Current Number of Available Bikes"></div>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="3">
+       <div id="iframeId1" data-view="Iframe" data-url="/trafficmap.html"></div>
     </li>
 
     <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
-      <div data-id="uberTime" data-view="List" style="background-color:#678c93;" data-unordered="true" data-title="Uber ETAs" data-moreinfo="Real-time info from Uber"></div>
+      <div data-id="railinfo" data-view="List" style="background-color:#E57254;" data-unordered="true" data-title="Clarendon Station" data-moreinfo="Real-time info from WMATA"></div>
     </li>
 
-    <li data-row="1" data-col="5" data-sizex="1" data-sizey="1">
+    <li data-row="1" data-col="4" data-sizex="3" data-sizey="1">
+      <div data-id="railincidents" data-view="List" style="background-color: #A154A1;" data-title="Metro Rail Incidents" data-moreinfo="Real-time info from WMATA"></div>
+    </li>
+
+    <li data-row="2" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="hobsons" data-view="Meter" style="background-color:#E5C454;" data-title="Clarendon Station Bikeshare" data-min="0" data-max="17" data-moreinfo="Current Number of Available Bikes"></div>
+    </li>
+
+    <li data-row="2" data-col="4" data-sizex="1" data-sizey="1">
+      <div data-id="fillmore" data-view="Meter" style="background-color:#52D273;" data-title="Clarendon Blvd & Fillmore St Bikeshare" data-min="0" data-max="11" data-moreinfo="Current Number of Available Bikes"></div>
+    </li>
+
+    <li data-row="2" data-col="5" data-sizex="1" data-sizey="1">
+      <div data-id="fairfax" data-view="Meter" style="background-color:#656565;" data-title="Fairfax Dr & Wilson Blvd Bikeshare" data-min="0" data-max="10" data-moreinfo="Current Number of Available Bikes"></div>
+    </li>
+
+    <li data-row="3" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="uberTime" data-view="List" style="background-color:#E94F62;" data-unordered="true" data-title="Uber ETAs" data-moreinfo="Real-time info from Uber"></div>
+    </li>
+
+    <li data-row="2" data-col="6" data-sizex="1" data-sizey="1">
       <div data-view="Image" data-image="/logo.png"></div>
     </li>
 
-    <li data-row="1" data-col="2" data-sizex="1" data-sizey="1">
+    <li data-row="3" data-col="4" data-sizex="1" data-sizey="1">
       <div data-id="weather" data-view="Weather"></div>
     </li>
 
-    <li data-row="3" data-col="2" data-sizex="2" data-sizey="1">
+    <li data-row="3" data-col="5" data-sizex="2" data-sizey="1">
       <div data-id="traffic" data-view="Comments" style="background-color:#00B7CE;" data-moreinfo="Traffic From Around the Region"></div>
       <i class="fa fa-twitter icon-background"></i>
     </li>
