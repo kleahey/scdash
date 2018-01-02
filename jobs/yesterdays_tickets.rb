@@ -10,7 +10,7 @@ configuration =
 {
   :hostname   => 'd19.parature.com',
   :account_id => '33011',
-  :token      => 'Sn5wkZHGHZhwkHUvJ3OIvqhS0eyiZrHcOWNIrYrTh0In16VGnboqlREsm@mUFkbW7GxQQx7kcwGiSzHRlrnW6jlM1ZnN@8SdxKsZYHJt2fQ=',
+  :token      => 'o3Hnww1q6F3cAx3iahBFu6AuOFUu8n2bXVKKYi3znrkz9kKjK7iqExuQ9H3a94Vh8aOCVNu5T@Rgx6nXJ/Zs2A/wBUn0Y6G4Xgui0mkDq9U=',
   :applicant_id => '33013', # ID for a specific example customer you want to use
   :recommender_id => '33014'  # ID for a specific example CSR you want to use
 }
