@@ -11,6 +11,7 @@ twitter = Twitter::REST::Client.new do |config|
 end
 
 search_term = URI::encode('#dctraffic')
+search_term2 = URI::encode('#commonapp')
 
 SCHEDULER.every '2m', :first_in => 0 do |job|
   begin
@@ -21,6 +22,19 @@ SCHEDULER.every '2m', :first_in => 0 do |job|
         { name: tweet.user.name, body: tweet.text, avatar: tweet.user.profile_image_url_https }
       end
       send_event('traffic', comments: tweets)
+    end
+  rescue Twitter::Error
+    puts "\e[33mFor the twitter widget to work, you need to put in your twitter API keys in the jobs/twitter.rb file.\e[0m"
+  end
+
+  begin
+    tweets = twitter.search("#{search_term2}")
+
+    if tweets
+      tweets = tweets.map do |tweet|
+        { name: tweet.user.name, body: tweet.text, avatar: tweet.user.profile_image_url_https }
+      end
+      send_event('twitter_mentions', comments: tweets)
     end
   rescue Twitter::Error
     puts "\e[33mFor the twitter widget to work, you need to put in your twitter API keys in the jobs/twitter.rb file.\e[0m"
